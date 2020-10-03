@@ -1,7 +1,15 @@
 variables:
-  DOCKERHUB_IMAGE: "mrnr91/kube-state-metrics"
+  DOCKERHUB_IMAGE: "mrnr91/kube-state-metrics-test"
   PLATFORMS: "linux/arm/v7,linux/arm64,linux/amd64"
-  
-include:
-  - project: 'shared/templates'
-    file: '.dockerhub-ubuntu.yml'
+
+build-multi:
+  stage: build
+  image: registry.gosr.se/norrsken/docker-builder:19.03.13-ubuntu2004
+  services:
+    - docker:19.03.13-dind
+  script:
+    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER"  --password-stdin docker.io
+    - REGISTRY=docker.io/$DOCKERHUB_IMAGE make all-container
+  tags:
+    - buildpc
+  when: manual
