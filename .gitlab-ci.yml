@@ -8,6 +8,7 @@ build-multi:
   services:
     - docker:19.03.13-dind
   script:
+    - apt-get -y install make
     - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER"  --password-stdin docker.io
     - REGISTRY=docker.io/$DOCKERHUB_IMAGE make all-container
   tags:
