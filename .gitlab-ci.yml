@@ -1,0 +1,7 @@
+variables:
+  DOCKERHUB_IMAGE: "mrnr91/kube-state-metrics"
+  PLATFORMS: "linux/arm/v7,linux/arm64,linux/amd64"
+  
+include:
+  - project: 'shared/templates'
+    file: '.dockerhub-ubuntu.yml'
