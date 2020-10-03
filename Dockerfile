@@ -1,12 +1,11 @@
-FROM golang:1.13 as builder
-ARG GOARCH
-ENV GOARCH=${GOARCH}
+ARG GOVERSION=1.15
+FROM golang:${GOVERSION} as builder
 WORKDIR /go/src/k8s.io/kube-state-metrics/
 COPY . /go/src/k8s.io/kube-state-metrics/
 
 RUN make build-local
 
-FROM gcr.io/distroless/static:latest
+FROM alpine:3.12
 COPY --from=builder /go/src/k8s.io/kube-state-metrics/kube-state-metrics /
 
 USER nobody
