@@ -10,7 +10,7 @@ build-multi:
   script:
     - apt-get -y install make
     - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER"  --password-stdin docker.io
-    - REGISTRY=docker.io/mrnr91 make all-container push-multi-arch
+    - REGISTRY=rcache.gosr.se/mrnr91 make all-container push-multi-arch
   tags:
     - buildpc
   when: manual

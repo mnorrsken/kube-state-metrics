@@ -19,6 +19,7 @@ GOLANGCI_VERSION := v1.19.1
 HAS_GOLANGCI := $(shell which golangci-lint)
 
 IMAGE = $(REGISTRY)/kube-state-metrics-test
+MIMAGE = docker.io/mrnr91/kube-state-metrics-test
 MULTI_ARCH_IMG = $(IMAGE)-$(ARCH)
 
 export DOCKER_CLI_EXPERIMENTAL=enabled
@@ -105,9 +106,9 @@ do-push-%:
 	${DOCKER_CLI} push $(IMAGE)-$*:$(TAG)
 
 push-multi-arch:
-	${DOCKER_CLI} manifest create --amend $(IMAGE):$(TAG) $(shell echo $(ALL_ARCH) | sed -e "s~[^ ]*~$(IMAGE)\-&:$(TAG)~g")
-	@for arch in $(ALL_ARCH); do ${DOCKER_CLI} manifest annotate --arch $${arch} $(IMAGE):$(TAG) $(IMAGE)-$${arch}:${TAG}; done
-	${DOCKER_CLI} manifest push --purge $(IMAGE):$(TAG)
+	${DOCKER_CLI} manifest create --amend $(MIMAGE):$(TAG) $(shell echo $(ALL_ARCH) | sed -e "s~[^ ]*~$(IMAGE)\-&:$(TAG)~g")
+	@for arch in $(ALL_ARCH); do ${DOCKER_CLI} manifest annotate --arch $${arch} $(MIMAGE):$(TAG) $(IMAGE)-$${arch}:${TAG}; done
+	${DOCKER_CLI} manifest push --purge $(MIMAGE):$(TAG)
 
 quay-push: .quay-push-$(ARCH)
 .quay-push-$(ARCH): container-$(ARCH)
