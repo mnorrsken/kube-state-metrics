@@ -18,7 +18,7 @@ BENCHCMP_BINARY := $(FIRST_GOPATH)/bin/benchcmp
 GOLANGCI_VERSION := v1.19.1
 HAS_GOLANGCI := $(shell which golangci-lint)
 
-IMAGE = $(REGISTRY)/kube-state-metrics
+IMAGE = $(REGISTRY)/kube-state-metrics-test
 MULTI_ARCH_IMG = $(IMAGE)-$(ARCH)
 
 export DOCKER_CLI_EXPERIMENTAL=enabled

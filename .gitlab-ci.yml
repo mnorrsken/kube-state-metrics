@@ -1,6 +1,6 @@
-variables:
-  DOCKERHUB_IMAGE: "mrnr91/kube-state-metrics-test"
-  PLATFORMS: "linux/arm/v7,linux/arm64,linux/amd64"
+#variables:
+#  DOCKERHUB_IMAGE: "mrnr91/kube-state-metrics-test"
+#  PLATFORMS: "linux/arm/v7,linux/arm64,linux/amd64"
 
 build-multi:
   stage: build
@@ -10,7 +10,7 @@ build-multi:
   script:
     - apt-get -y install make
     - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER"  --password-stdin docker.io
-    - REGISTRY=docker.io/$DOCKERHUB_IMAGE make all-container
+    - REGISTRY=docker.io/mrnr91 make all-container push
   tags:
     - buildpc
   when: manual
